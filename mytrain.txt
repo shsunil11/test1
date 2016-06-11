@@ -1,0 +1,73 @@
+hdfs dfs -mkdir /user/cloudera/stg_trans
+
+bline -f stg_trans.hql
+
+hdfs dfs -put trans.dat /user/cloudera/stg_trans
+
+create 'trans', 'info', {SPLITS=>['1','2']}
+
+bline -f trans.hql
+
+insert overwrite table trans
+select
+concat_ws("|",cast(cast(substr(cardno,-1,1) % 2 as int) as string) ,cardno)
+, name
+, city
+, state
+, trans_amt
+, age
+from stg_trans;
+========================
+stg_trans.hql
+========================
+CREATE EXTERNAL TABLE stg_trans 
+(
+cardno string
+, name string
+, city string 
+, state string
+, trans_amt decimal(9,2)
+,  age int
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+location '/user/cloudera/stg_trans'
+
+=======================
+trans.dat
+========================
+4413123457654321,USER01,Columbus,OH,23.11,23
+4791526738011122,USER02,Atlanta,GA,23.11,25
+4413111156798113,USER03,Arlington,OH,11.55,27
+4421349876544334,USER04,Seattle,VA,33.55,29
+4447954201939095,USER05,Boston,MA,11.91,31
+4456700900029116,USER06,Charlotte,NC,25.21,33
+4491254987653617,USER07,New York,NY,55.44,35
+4471243536771238,USER01,Los Angeles,CA,34.15,23
+4912398765432119,USER09,San Francisco,CA,73.21,37
+4512536372119910,USER10,Dallas,TX,43.10,39
+
+=============
+trans.hql
+=============
+CREATE EXTERNAL TABLE trans 
+( 
+cardno string
+, name string
+, city string
+, state string
+, trans_amt decimal(9,2)
+,  age int 
+)
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ( 'hbase.columns.mapping' = ":key,info:name,info:city,info:st,info:amt,info:age")
+TBLPROPERTIES ("hbase.table.name" = "trans")
+==============
+user.hql
+==============
+CREATE EXTERNAL TABLE user ( rowkey string, name string, age int )
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ( 'hbase.columns.mapping' = ":key,info:name,info:age#binary")
+TBLPROPERTIES ("hbase.table.name" = "user")
+=============
+
