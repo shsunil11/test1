@@ -1,3 +1,5 @@
+Steps
+=========================================
 hdfs dfs -mkdir /user/cloudera/stg_trans
 
 bline -f stg_trans.hql
