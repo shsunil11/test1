@@ -48,3 +48,13 @@ HDFS Permissions: Overcoming the "Permission Denied" AccessControlException
 sudo addgroup supergroup
 sudo useradd -a -G supergroup cloudera
 
+
+
+KAFKA
+========
+kafka-topics --list --zookeeper:localhost:2181
+
+kafka-topics --create --broker-list localhost:9092
+
+
+
