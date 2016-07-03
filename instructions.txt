@@ -4,6 +4,9 @@ sudo cp -p /etc/hive/conf/hive-site.xml /etc/spark/conf
 
 alias bline='beeline -u "jdbc:hive2://localhost:10000/default"'
 
+In 5.7 VM 
+alias bline='beeline -u "jdbc:hive2://localhost:10000"'
+
 
 
 1.
