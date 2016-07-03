@@ -3,3 +3,45 @@ sudo -u hdfs hdfs dfs -chmod -R 777 /user/
 sudo cp -p /etc/hive/conf/hive-site.xml /etc/spark/conf
 
 alias bline='beeline -u "jdbc:hive2://localhost:10000/default"'
+
+
+
+1.
+======================================================================================
+Issue with trying to run pyspark
+Permission denied. user=root is not the owner of inode=/user/spark/applicationHistory
+
+To fix, run the following commands
+
+/home/cloudera>sudo -u hdfs hadoop fs -chmod 777 /user/spark
+/home/cloudera>sudo -u spark hadoop fs -chmod 777 /user/spark/applicationHistory
+
+2.
+======================================================================================
+Launch Cloudera Express from Desktop,
+Once completed then go to Cloudera Manager and Restart all Services.
+Wait until all services are restarted
+
+3.
+======================================================================================
+Kafka Install
+
+sudo yum clean all
+sudo yum install kafka
+sudo yum install kafka-server
+sudo service kafka-server start
+
+4.
+======================================================================================
+Kafka-Python Install
+
+sudo yum install python-pip
+sudo pip install kafka-python
+
+5.
+======================================================================================
+HDFS Permissions: Overcoming the "Permission Denied" AccessControlException
+
+sudo addgroup supergroup
+sudo useradd -a -G supergroup cloudera
+
