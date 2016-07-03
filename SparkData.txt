@@ -1,0 +1,19 @@
+/home/cloudera/spark>cat example1.txt
+
+User01 User02 User03 User04
+User01 User05 User03
+User02 User01 User07 User11
+
+/home/cloudera/spark>cat example2.txt
+00001	SKU010:SKU933:SKU022
+00002	SKU912:SKU331
+00003	SKU888:SKU022:SKU010:SKU594
+00004	SKU411
+
+/home/cloudera/spark>cat pages.txt
+page1 page3
+page2 page1
+page4 page1
+page3 page1
+page4 page2
+page3 page4
