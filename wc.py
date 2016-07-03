@@ -11,5 +11,9 @@ words = lines.flatMap(lambda line:  line.split(" ")).map(lambda word: (word,1)).
 
 for line in words.take(10):
    print line
+   
+for wc in words.collect():
+   print wc[0] + " = " + str(wc[1])
+
 
 sc.stop()
