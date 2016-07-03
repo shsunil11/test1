@@ -1,0 +1,57 @@
+hdfs dfs -mkdir hivedata
+
+
+CREATE EXTERNAL TABLE stg_trans 
+( 
+cardno string
+, name string
+, city string
+, state string
+, trans_amt decimal(9,2)
+,  age int 
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+location '/user/cloudera/hivedata/stg_trans'
+
+
+create 'trans', 'info', {SPLITS=>['1','2']}
+
+
+bline -f trans.hql
+
+insert overwrite table trans
+select
+concat_ws("|",cast(cast(substr(cardno,-1,1) % 2 as int) as string) ,cardno)
+, name
+, city
+, state
+, trans_amt
+, age
+from stg_trans;
+
+CREATE EXTERNAL TABLE trans
+(
+cardno string
+, name string
+, city string
+, state string
+, trans_amt decimal(9,2)
+,  age int
+)
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ( 'hbase.columns.mapping' = ":key,info:name,info:city,info:st,info:amt,info:age")
+TBLPROPERTIES ("hbase.table.name" = "trans")
+;
+
+
+file.txt
+aaaa bbb ccc aaaa bbb ccc a123
+aaaa bb1 cc2 aaaa bbb ccc a124
+aaa1 bb1 cc2 aaaa bbb ccc a123
+
+
+
+
+
+
