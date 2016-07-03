@@ -1,0 +1,3 @@
+sudo -u hdfs hdfs dfs -chmod -R 777 /user/
+
+sudo cp -p /etc/hive/conf/hive-site.xml /etc/spark/conf
