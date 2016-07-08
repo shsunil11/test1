@@ -1,5 +1,13 @@
 Project1
 
+Goal :
+Ingest tables from MySql retail_db into Hive
+customers
+categories
+products
+departments
+order_detail (partitioned table created by joining orders and order_detail)
+
 Step1.
 =============================
 Use the retail_db database in MySql
@@ -19,8 +27,12 @@ Create folder structure in local linux
 Create folder structure in HDFS
 /user/cloudera/training/project1
                                  /workflows/wf_db_ingest
+                        
+Step3.
+=====================================
+Create hive db retail_stg with following tables 
                                  
-  Step3.
+  Step5.
   ============================================
   Create one parameterized oozie workflow with 3 actions
   sqoop - to sqoop from  MySql into retail_stg db  as delimited text with control A as delimiter
