@@ -45,8 +45,18 @@ Tables should be parquet tables compressed with snappy
   ============================================
   Create one parameterized oozie workflow with 3 actions
   sqoop - to sqoop from  MySql into retail_stg db  as delimited text with control A as delimiter
-  hive  - to load the sqooped data into a parquet table in retail database
+  hive2  - to load the sqooped data into a parquet table in retail database
   python script to validate the counts between MySql and Impala
+  
+  Create a properties file for each table
+  The sqoop action should be parameterized for table name, database name, column name etc
+  The hive script to load from staging into parquet tables should also be parameterized for list of columns
+  
+  Step 6.
+  =============================================================
+  Create a python script to run a oozie workflow, should take the workflow name and path ad parameters
+  Should submit the workflow using oozie and loop until workflow completes of fails
+  Should log the progress of the workflow into the logs directory
   
   
   
