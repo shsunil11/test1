@@ -5,4 +5,31 @@ Step1.
 Use the retail_db database in MySql
 Create a daily partitioned table order_detail by joining orders and order_items.
 The order_detail table will have and additional column trans_date of type date
-Load approx 20% of records from order_items (joined with orders table) into each of 5 partitions of the order_detail Table.
+Load approx 20% of records from order_items (joined with orders table) into each of the 5 partitions of the order_detail Table.
+
+Step2.
+=====================================
+Create folder structure in local linux
+/home/cloudera/training/project1
+                                 /workflows/wf_db_ingest
+                                 /hive
+                                 /scripts
+                                 /logs
+                                 
+Create folder structure in HDFS
+/user/cloudera/training/project1
+                                 /workflows/wf_db_ingest
+                                 
+  Step3.
+  ============================================
+  Create one parameterized oozie workflow with 3 actions
+  sqoop - to sqoop from  MySql into retail_stg db  as delimited text with control A as delimiter
+  hive  - to load the sqooped data into a parquet table in retail database
+  python script to validate the counts between MySql and Impala
+  
+  
+  
+  
+
+                                 
+                                 
