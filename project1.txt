@@ -12,7 +12,7 @@ Step1.
 =============================
 Use the retail_db database in MySql
 Create a daily partitioned table order_detail by joining orders and order_items.
-The order_detail table will have and additional column trans_date of type date
+The order_detail table will have an additional column trans_date of type date
 Load approx 20% of records from order_items (joined with orders table) into each of the 5 partitions of the order_detail Table.
 
 Step2.
@@ -20,7 +20,7 @@ Step2.
 Create folder structure in local linux
 /home/cloudera/training/project1
                                  /workflows/wf_db_ingest
-                                 /hive
+                                 /hive  (ddl for hive tables)
                                  /scripts
                                  /logs
                                  
@@ -32,7 +32,7 @@ Step3.
 =====================================
 Create hive db retail_stg with the requied tables 
 Table structure should be same as that of MySql
-Tables should be text with delimiter as control A
+Tables should be text with delimiter as control A and not compressed
 
 Step4.
 ====================================================
@@ -44,21 +44,21 @@ Tables should be parquet tables compressed with snappy
   Step5.
   ============================================
   Create one parameterized oozie workflow with 3 actions
-  sqoop - to sqoop from  MySql into retail_stg db  as delimited text with control A as delimiter
+  sqoop - to sqoop from  MySql into retail_stg hive db  as delimited text with control A as delimiter
          - Handle nulls and also handle presence of the delimite or newline in the data 
   hive2  - to load the sqooped data into a parquet table in retail database
          -  Use dynamic partitioning for partitioned tables
-  python script to validate the counts between MySql and Impala
+  shell action - python script to validate the counts between MySql and Impala (use invalidate metadata on impala table before querying it)
   
   Create a properties file for each table
-  The sqoop action should be parameterized for table name, database name, column name etc
+  The sqoop action should be parameterized for table name, database name, column names etc
   The hive script to load from staging into parquet tables should also be parameterized for list of columns
   
   Step 6.
   =============================================================
-  Create a python script to run a oozie workflow, should take the workflow name and path ad parameters
-  Should submit the workflow using oozie and loop until workflow completes of fails
-  Should log the progress of the workflow into the logs directory
+  Create a python script to run a oozie workflow, should take the workflow name and path as parameters
+  The script should submit the workflow using oozie command and loop until workflow completes of fails
+  The script should log the progress of the workflow into the logs directory
   
   Step 7.
   =================================
