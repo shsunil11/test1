@@ -45,7 +45,9 @@ Tables should be parquet tables compressed with snappy
   ============================================
   Create one parameterized oozie workflow with 3 actions
   sqoop - to sqoop from  MySql into retail_stg db  as delimited text with control A as delimiter
+         - Handle nulls and also handle presence of the delimite or newline in the data 
   hive2  - to load the sqooped data into a parquet table in retail database
+         -  Use dynamic partitioning for partitioned tables
   python script to validate the counts between MySql and Impala
   
   Create a properties file for each table
