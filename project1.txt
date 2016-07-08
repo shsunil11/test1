@@ -30,7 +30,16 @@ Create folder structure in HDFS
                         
 Step3.
 =====================================
-Create hive db retail_stg with following tables 
+Create hive db retail_stg with the requied tables 
+Table structure should be same as that of MySql
+Tables should be text with delimiter as control A
+
+Step4.
+====================================================
+Create hive db retail.
+order_detail should be partitioned on trans_date
+Tables should be parquet tables compressed with snappy
+
                                  
   Step5.
   ============================================
