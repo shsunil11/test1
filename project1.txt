@@ -58,6 +58,11 @@ Tables should be parquet tables compressed with snappy
   Should submit the workflow using oozie and loop until workflow completes of fails
   Should log the progress of the workflow into the logs directory
   
+  Step 7.
+  =================================
+  Ingest the tables using the oozie workflow
+  For the order_detail table, ingest one partition, then next 2 partitions and then next 2 partitions
+  
   
   
   
