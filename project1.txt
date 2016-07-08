@@ -1,0 +1,8 @@
+Project1
+
+Step1.
+=============================
+Use the retail_db database in MySql
+Create a daily partitioned table order_detail by joining orders and order_items.
+The order_detail table will have and additional column trans_date of type date
+Load approx 20% of records from order_items (joined with orders table) into each of 5 partitions of the order_detail Table.
