@@ -34,6 +34,10 @@ Create hive db retail_stg with the requied tables
 Table structure should be same as that of MySql
 Tables should be text with delimiter as control A and not compressed
 
+The goal is to have the final table in parquet format (see Step 4).
+However, we do not want to sqoop directly in parquet, since sqoop in text format is much faster.
+So we sqoop as text and land in the hive staging table location, then use hive hql to load the text data from staging into the parquet table.
+
 Step4.
 ====================================================
 Create hive db retail.
