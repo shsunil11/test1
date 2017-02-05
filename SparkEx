@@ -2,10 +2,12 @@ lines = sc.textFile("spark/example1.txt")lines.filter(lambda x: "User02" in x).t
 lines.map(lambda x: x.upper()).take(11)
 lines.flatMap(lambda x: x.split()).take(15)
 lines.groupBy(lambda x: len(x)).take(11)
-for groups in lines.groupBy(lambda x: len(x)).collect():
-   print "len = " + str(groups[0])
-   for str in groups[1]:
-   print "#   " + str
+for group in lines.groupBy(lambda x: len(x)).collect():
+   print "len = " + str(group[0])
+   for element in group[1]:
+      print "#   " + element
+      
+ 
    
   
 
