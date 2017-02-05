@@ -8,6 +8,28 @@ for group in lines.groupBy(lambda x: len(x)).collect():
       print "#   " + element
       
  
+ 
+ 
+ cogroup
+ ============
+ rdd1 = sc.parallelize([(1,2),(3,4),(3,6)])
+ rdd1 = sc.parallelize([(3,9)])
+ cg = rdd1.cogroup(rdd2) 
+ 
+ for elem in cg.take(11):
+    print elem[0]
+    print " ****************"
+    for cols in elem[1]:
+       y = ""
+       for x in cols:
+          y = y + str(x) + " "
+       print y
+       print "############"
+       
+       
+
+      
+ 
    
   
 
