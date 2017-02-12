@@ -2,7 +2,7 @@ from pyspark.sql import Row
 
 sc.setLogLevel("WARN")
 
-lines = sc.textFile("/user/xx62883/ssql/ssql_data.txt")
+lines = sc.textFile("/user/cloudera/ssql/ssql_data.txt")
 
 cols = lines.map(lambda x: x.split(","))
 
@@ -36,17 +36,17 @@ oldpTrans.take(10)
 #oldpName is DataFrame
 oldpName = oldp.select("name")
 
-oldp.write.format("parquet").save("/user/xx62883/ssql/row.prq")
+oldp.write.format("parquet").save("/user/cloudera/ssql/row.prq")
 
 
-prqIn = sqlCtx.read.parquet("/user/xx62883/ssql/row.prq")
+prqIn = sqlCtx.read.parquet("/user/cloudera/ssql/row.prq")
 
 #prqIn is DataFrame       DataFrame[name: string, age: bigint]
 
-prqIn.write.json("/user/xx62883/ssql/ssql_json")
+prqIn.write.json("/user/cloudera/ssql/ssql_json")
 
 # RDD of String (String contains valid JSON Data) can also be passed to read.json
-jsonIn = sqlCtx.read.json("/user/xx62883/ssql/ssql_json")
+jsonIn = sqlCtx.read.json("/user/cloudera/ssql/ssql_json")
 
 # Use read.option("mergeSchema","true") to merge Parquet Schemas of input files
 #  OR set spark.sql.parquet.mergeSchema to true
