@@ -3,41 +3,40 @@ import sys
 from pyspark import SparkConf,SparkContext
 from pyspark.streaming import StreamingContext
 
-conf = SparkConf().setAppName("Python Streaming")
+conf = SparkConf().setAppName("Streaming Sliding Window")
 
 sc = SparkContext(conf = conf)
-sc.setLogLevel("WARN")
+#sc.setLogLevel("WARN")
 
+#sys.argv[1] is the first command line parameter which is the batchInterval
 batchInterval = int(sys.argv[1])
 
 ssc = StreamingContext(sc, batchInterval)
 
-lines = ssc.socketTextStream("lbdp167a", 7777)
+lines = ssc.socketTextStream("localhost", 7777)
 
-ssc.checkpoint("/user/xx62883/streamcp")
+ssc.checkpoint("/user/cloudera/streamcp")
 users = lines.flatMap(lambda x: x.split(" "))
 
 userPairs = users.map(lambda x: (x,1))
 
 userPairs.pprint()
 
+# Window Duration = 4 times batchInterval  and Slide Duration = 2 times batchInterval
 winCount = userPairs.reduceByKeyAndWindow(lambda x,y:x+y, lambda x,y:x-y, 4*batchInterval, 2*batchInterval)
 
-def winRDD(rdd):
-   print "Printing foreach RDD"
-   for lines in rdd.takeOrdered(20, lambda (x,y): (-y,x)):
-      print lines
-      
-#winCount.foreachRDD(winRDD)
-
+# This function prints the 20 elements from the input rdd
 def winSorted(rdd):
    print "Printing foreach Sorted RDD"
    for lines in rdd.take(20):
       print lines[1] + ", " + str(lines[0])
 
+# Sort by descending order of the value (value = count in this case)
 winTrans = winCount.map(lambda (x,y) : (y,x)).transform(lambda rdd: rdd.sortByKey(False))
+
+#For each rdd print the 20 elements
 winTrans.foreachRDD(winSorted)
 
 ssc.start()
 
-ssc.awaitTermination()x`xx
+ssc.awaitTermination()
