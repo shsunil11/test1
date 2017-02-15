@@ -1,3 +1,8 @@
+# First run the nc -lk command as follows from one terminal
+# nc -lk localhost 7777
+# Then submit this application as follows from another terminal
+# spark-submit --master local[2] StrmUpd.py 10
+
 import sys
 
 from pyspark import SparkConf,SparkContext
