@@ -37,7 +37,7 @@ userState.saveAsTextFiles("/user/cloudera/streamOut","txt")
 
 # for each rdd print the top 20 elements in descendin order of the value (value = count in this case)
 def winRDD(rdd):
-   print "Printing foreach RDD"
+   print "Printing Updated foreach RDD"
    for lines in rdd.takeOrdered(20, lambda (x,y): (-y,x)):
       print lines
 
