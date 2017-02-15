@@ -27,7 +27,7 @@ winCount = userPairs.reduceByKeyAndWindow(lambda x,y:x+y, lambda x,y:x-y, 4*batc
 
 # This function prints the 20 elements from the input rdd
 def winSorted(rdd):
-   print "Printing foreach Sorted RDD"
+   print "Printing Window foreach Sorted RDD"
    for lines in rdd.take(20):
       print lines[1] + ", " + str(lines[0])
 
