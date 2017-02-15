@@ -1,3 +1,6 @@
+# submit this application as follows
+# spark-submit --master local[2] StrmWin.py 10
+
 import sys
 
 from pyspark import SparkConf,SparkContext
