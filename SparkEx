@@ -1,3 +1,8 @@
+
+lines = sc.textFile("spark/example1.txt")
+fil = lines.filter(lambda x: "USER02" in x)
+fil.collect()
+
 lines = sc.textFile("spark/example1.txt")lines.filter(lambda x: "User02" in x).take(11)
 lines.map(lambda x: x.upper()).take(11)
 lines.flatMap(lambda x: x.split()).take(15)
