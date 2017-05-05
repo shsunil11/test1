@@ -1,0 +1,7 @@
+change the adapter settings on your Oracle VM vitualbox to Bridged Adapter On the top left side of you Virtualbox screen click on "Machine" Click on Machine>Settings>Network>
+
+Change the "Attached to:" to "Bridged Adapter" then Click "Ok"
+
+Reset the Virtualbox (Click Machine>Reset)
+
+Once it comes up do an ifconfig in terminal and use the new ip address for SCP
