@@ -5,3 +5,7 @@ Change the "Attached to:" to "Bridged Adapter" then Click "Ok"
 Reset the Virtualbox (Click Machine>Reset)
 
 Once it comes up do an ifconfig in terminal and use the new ip address for SCP
+
+
+For shared drive
+sudo  mount -t vboxsf -o uid=501,gid=501 traindata /home/cloudera/traindata
