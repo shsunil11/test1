@@ -1,10 +1,5 @@
 from pyspark.streaming import StreamingContext
 
-conf = SparkConf().setAppName("Python Streaming")
-
-sc = SparkContext(conf = conf)
-
-
 ssc = StreamingContext(sc, 10)
 
 lines = ssc.socketTextStream("localhost", 7777)
