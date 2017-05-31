@@ -1,0 +1,35 @@
+from pyspark.streaming import StreamingContext
+
+conf = SparkConf().setAppName("Python Streaming")
+
+sc = SparkContext(conf = conf)
+
+
+ssc = StreamingContext(sc, 10)
+
+lines = ssc.socketTextStream("localhost", 7777)
+
+ssc.checkpoint("/user/cloudera/streamcp")
+users = lines.flatMap(lambda x: x.split(" "))
+
+userPairs = users.map(lambda x: (x,1))
+
+userPairs.pprint()
+
+def updateFunc(values, runningCount):
+   if runningCount is None:
+      runningCount = 0
+   return sum(values) + runningCount
+
+userState = userPairs.updateStateByKey(updateFunc)
+
+userState.saveAsTextFiles("/user/cloudera/streamOut","txt")
+
+def winRDD(rdd):
+   print "Printing foreach RDD #########"
+   for lines in rdd.takeOrdered(20, lambda (x,y): (-y,x)):
+      print lines
+
+userState.foreachRDD(winRDD)
+
+ssc.start()
