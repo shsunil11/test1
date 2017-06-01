@@ -1,0 +1,13 @@
+Kafka Install
+
+sudo yum clean all
+sudo yum install kafka
+sudo yum install kafka-server
+sudo service kafka-server start
+
+4.
+======================================================================================
+Kafka-Python Install
+
+sudo yum install python-pip
+sudo pip install kafka-python
