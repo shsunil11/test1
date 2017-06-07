@@ -1,0 +1,80 @@
+object session6 {
+
+
+  type Word = String
+
+  type Sentence = List[Word]
+
+  type Occurrences = List[(Char, Int)]
+
+
+  def wordOccurrences(w: Word): Occurrences = {
+    w.groupBy(c=>c.toLower).toList.sorted.map{case (x,y) => (x,y.length) }
+  }
+
+  val s1 = wordOccurrences("lard")
+
+  val s2 = wordOccurrences("r")
+
+  def sentenceOccurrences(s: Sentence): Occurrences = {
+    wordOccurrences(s.mkString)
+
+  }
+
+
+   val s = List("latentveto")
+
+   sentenceOccurrences(s)
+
+  val dictionary: List[Word] = List("talent","latent","vote")
+
+
+  val dictionaryByOccurrences: Map[Occurrences, List[Word]] = dictionary.groupBy(x=>wordOccurrences(x))
+
+  def wordAnagrams(word: Word): List[Word] = dictionaryByOccurrences(wordOccurrences(word))
+
+  //wordAnagrams("team")
+
+  //val olist = List(('a',2),('b',2))
+
+  val olist = sentenceOccurrences(s)
+
+  val l1 = List(List(('a',1)),List(('a',2)))
+  val l2 = List(List(('c',2),('d',2)),List(('e',1)))
+
+  val l3 = l1::List(List())
+
+  val in1 = List(List(1),List(2),List(3))
+
+ def combinations(occurrences: Occurrences): List[Occurrences] = {
+   def combinationsAcc(acc: List[Occurrences], occur: Occurrences) : List[Occurrences] = {
+     if (occur.isEmpty) acc:::List(List())
+     else {
+       val occ = (for (i <- 1 to occur.head._2) yield List((occur.head._1, i))).toList
+       val newAcc = for {
+         x <- occ
+         y <- acc
+       } yield x:::y
+
+       combinationsAcc(newAcc:::occ:::acc, occur.tail)
+     }
+   }
+   combinationsAcc(List(),occurrences)
+ }
+
+ combinations(Nil)
+
+ def subtract(x: Occurrences, y: Occurrences): Occurrences = {
+
+   val s3 = x.toMap
+   val s4 = y.toMap
+
+   (s4.foldLeft(s3)((m,y) => s3.updated(y._1,y._2 - m(y._1))).filter({case (x,y) => (y != 0)})).toList
+ }
+
+
+
+  subtract(s1,s2)
+
+
+}
