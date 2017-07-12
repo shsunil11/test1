@@ -1,0 +1,11 @@
+Running the Spark Streaming Word Count
+
+Open a Terminal
+run the following command 
+nc -lk localhost 7777
+
+Open another Terminal and submit the spark application as follows from the directory /home/cloudera/train/spark
+
+spark-submit --master local[2] strmwc.py 10
+
+From the first terminal type words, hit Enter, type words, hit Enter and see the word count on the other Terminal
