@@ -1,0 +1,29 @@
+from pyspark import SparkConf, SparkContext
+#need to import streaming context as well
+from pyspark.streaming import StreamingContext
+import sys
+
+conf = SparkConf()
+
+sc = SparkContext(conf = conf)
+sc.setLogLevel("WARN")
+
+#sys.argv[1] is the first command line parameter which is the batchInterval
+batchInterval = int(sys.argv[1])
+
+#Create the streaming context from spark context
+ssc = StreamingContext(sc, batchInterval)
+
+#Open a Socket Stream
+#Receives data from the other terminal which is running    
+#nc -lk localhost 7777
+lines = ssc.socketTextStream("localhost", 7777)
+
+users = lines.flatMap(lambda x: x.split(" "))
+userPairs = users.map(lambda x: (x,1))
+counts = userPairs.reduceByKey(lambda x,y: x + y)
+counts.pprint()
+
+ssc.start()
+
+ssc.awaitTermination()
