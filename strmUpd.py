@@ -11,7 +11,7 @@ from pyspark.streaming import StreamingContext
 conf = SparkConf().setAppName("Streaming UpdateByKey")
 
 sc = SparkContext(conf = conf)
-#sc.setLogLevel("WARN")
+sc.setLogLevel("WARN")
 
 # sys.argv[1] is the first command line parameter which is batchInterval
 batchInterval = int(sys.argv[1])
