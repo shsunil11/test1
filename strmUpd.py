@@ -34,7 +34,8 @@ def updateFunc(values, runningCount):
       runningCount = 0
 
    return sum(values) + runningCount
-   userState = userPairs.updateStateByKey(updateFunc)
+
+userState = userPairs.updateStateByKey(updateFunc)
 
 # Save each batch to HDFS (folder will be created if it does not exist
 # "txt" is the suffix of the folder
